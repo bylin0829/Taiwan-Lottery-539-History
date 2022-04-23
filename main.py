@@ -41,9 +41,10 @@ for idx in range(url_end):
     file = join(folder, output_file)
 
     with open(file, 'a', encoding='UTF-8') as external_file:
-        print('Page {idx}'.format(idx=idx+1), file=external_file)
+        # print('Page {idx}'.format(idx=idx+1), file=external_file)
         for i in range(len(number)):
             add_text = 'date,{date},number,{number}'.format(
                 date=date[i], number=number[i])
             print(add_text, file=external_file)
         external_file.close()
+    print(idx)
