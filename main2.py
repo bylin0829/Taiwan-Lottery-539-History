@@ -1,9 +1,6 @@
 # -*- coding: UTF-8 -*-
-
-from ntpath import join
 import requests
 from bs4 import BeautifulSoup
-import pathlib
 import datetime
 
 headers = {
@@ -13,11 +10,12 @@ headers = {
 url_end = 153
 url_tag = 'td'
 url_class = 'auto-style5'
-url_chapter = 'https://www.lotto-8.com/listlto539bbk.asp?indexpage='
 
-for idx in range(url_end):
-    url_goal = url_chapter + str(idx+1)
-    response = requests.get(url_goal, headers=headers)
+# Open web by year
+for year in range(2008, datetime.datetime.now().year):
+    url_chapter = 'http://www.nfd.com.tw/lottery/39-year/39-{year}.htm'.format(
+        year=year)
+    response = requests.get(url_chapter, headers=headers)
     response.encoding = 'utf-8'
     soup = BeautifulSoup(response.text, "html.parser")
     result = soup.find_all(name=url_tag, class_=url_class)
@@ -37,6 +35,7 @@ for idx in range(url_end):
     if len(date) != len(number):
         raise ValueError()
 
+# Save data to csv
     file = 'output.csv'
     with open(file, 'a', encoding='UTF-8') as external_file:
         # print('Page {idx}'.format(idx=idx+1), file=external_file)
